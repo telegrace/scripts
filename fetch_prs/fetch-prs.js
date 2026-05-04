@@ -14,12 +14,16 @@ function run(cmd) {
 }
 
 // ---------- STEP 1: FETCH PRS ----------
+// -- involves: includes PRs where the user is author, assignee, reviewer, or mentioned in comments
+// -- author: only includes PRs created by the user
+// -- merged: only includes PRs that were merged
 function fetchPRs() {
 	console.log("Fetching PRs via search...");
 
 	const cmd = `
   gh search prs \
-    --involves ${USERNAME} \
+    --author ${USERNAME} \
+		--merged \
     --created ">=${DATE}" \
     --json title,body,repository,createdAt,closedAt,url,number \
     --limit ${LIMIT}
